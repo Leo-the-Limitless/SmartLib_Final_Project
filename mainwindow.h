@@ -21,6 +21,7 @@ private slots:
     void loadBooks();
     void searchBooks();
 
+    void onActionLogOutClicked();
     void onActionExitClicked();
     void onActionRefreshClicked();
     void onActionAddBookClicked();

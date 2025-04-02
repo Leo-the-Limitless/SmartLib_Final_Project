@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "AddBookDialog.h"
 #include "EditBookDialog.h"
+#include "LoginWindow.h"
 #include "ui_mainwindow.h"
 #include "DeleteBookDialog.h"
 #include <QMessageBox>
@@ -21,6 +22,7 @@ MainWindow::MainWindow(int userId, const QString &username, const QString &email
         ui->menuBooks->menuAction()->setVisible(false);
     }
 
+    connect(ui->actionLog_out, &QAction::triggered, this, &MainWindow::onActionLogOutClicked);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::onActionExitClicked);
     connect(ui->actionRefresh, &QAction::triggered, this, &MainWindow::onActionRefreshClicked);
     connect(ui->actionAddBook, &QAction::triggered, this, &MainWindow::onActionAddBookClicked);
@@ -88,6 +90,18 @@ void MainWindow::searchBooks() {
     } else {
         ui->ResultLabel->clear();
     }
+}
+
+void MainWindow::onActionLogOutClicked() {
+    // Show the login window
+    LoginWindow *loginWindow = new LoginWindow();
+    loginWindow->show();
+
+    // Hide the main window so the user can log in again
+    this->hide();
+
+    // Optionally, you can connect the `destroyed` signal to close the main window when the login window is closed
+    connect(loginWindow, &LoginWindow::destroyed, this, &MainWindow::close);
 }
 
 void MainWindow::onBorrowButtonClicked() {
