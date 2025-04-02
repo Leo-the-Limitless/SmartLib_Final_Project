@@ -2,6 +2,8 @@
 #include "ui_EditBookDialog.h"
 
 #include <QMessageBox>
+#include <QSqlQuery>
+#include <QSqlError>
 
 EditBookDialog::EditBookDialog(QWidget *parent)
     : QDialog(parent), ui(new Ui::EditBookDialog) {
@@ -20,7 +22,7 @@ void EditBookDialog::onIdInputChanged(const QString &text) {
         return;
     }
 
-    currentBookId = text.toInt();
+    currentBookId = text;  // Store as QString since book_id is TEXT now
 
     QSqlQuery query;
     query.prepare("SELECT title, author, genre, publication_year, stock FROM books WHERE book_id = :book_id");
@@ -38,17 +40,33 @@ void EditBookDialog::onIdInputChanged(const QString &text) {
 }
 
 void EditBookDialog::onSaveButtonClicked() {
-    QString title = ui->titleInput->text();
-    QString author = ui->authorInput->text();
-    QString genre = ui->genreInput->text();
-    QString year = ui->yearInput->text();
-    int stock = ui->stockInput->text().toInt();  // Get the stock value
+    QString title = ui->titleInput->text().trimmed();
+    QString author = ui->authorInput->text().trimmed();
+    QString genre = ui->genreInput->text().trimmed();
+    QString yearStr = ui->yearInput->text().trimmed();
+    QString stockStr = ui->stockInput->text().trimmed();
 
-    if (title.isEmpty() || author.isEmpty() || genre.isEmpty() || year.isEmpty() || ui->stockInput->text().isEmpty()) {
+    // Ensure all fields are filled
+    if (title.isEmpty() || author.isEmpty() || genre.isEmpty() || yearStr.isEmpty() || stockStr.isEmpty()) {
         QMessageBox::warning(this, "Error", "Please fill in all fields.");
         return;
     }
 
+    // Validate year and stock inputs
+    bool yearOk, stockOk;
+    int year = yearStr.toInt(&yearOk);
+    int stock = stockStr.toInt(&stockOk);
+
+    if (!yearOk || year <= 0) {
+        QMessageBox::warning(this, "Error", "Publication year must be a valid positive integer.");
+        return;
+    }
+    if (!stockOk || stock <= 0) {
+        QMessageBox::warning(this, "Error", "Stock must be a valid positive integer.");
+        return;
+    }
+
+    // Update book details in the database
     QSqlQuery query;
     query.prepare("UPDATE books SET title = :title, author = :author, genre = :genre, "
                   "publication_year = :year, stock = :stock WHERE book_id = :book_id");
@@ -63,6 +81,6 @@ void EditBookDialog::onSaveButtonClicked() {
         QMessageBox::information(this, "Success", "Book updated successfully!");
         accept();
     } else {
-        QMessageBox::warning(this, "Error", "Failed to update book.");
+        QMessageBox::warning(this, "Error", "Failed to update book: " + query.lastError().text());
     }
 }

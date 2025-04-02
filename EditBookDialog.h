@@ -22,7 +22,7 @@ private slots:
 private:
     Ui::EditBookDialog *ui;
     DatabaseManager dbManager;
-    int currentBookId;
+    QString currentBookId;
 };
 
 #endif // EDITBOOKDIALOG_H

@@ -48,7 +48,7 @@ void DatabaseManager::initializeDatabase() {
 
     // Create Books Table
     if (!query.exec("CREATE TABLE IF NOT EXISTS books ("
-                    "book_id INTEGER PRIMARY KEY, "
+                    "book_id TEXT PRIMARY KEY, "
                     "title TEXT NOT NULL, "
                     "author TEXT NOT NULL, "
                     "genre TEXT, "

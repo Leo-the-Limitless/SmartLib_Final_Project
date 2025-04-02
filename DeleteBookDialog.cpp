@@ -24,7 +24,7 @@ void DeleteBookDialog::onIdInputChanged(const QString &text) {
         return;
     }
 
-    currentBookId = text.toInt();
+    currentBookId = text;
 
     // Prepare query to find the book by ID
     QSqlQuery query;

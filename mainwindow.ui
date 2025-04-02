@@ -394,15 +394,8 @@ QPushButton:disabled {
     <addaction name="actionDeleteBook"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuBooks"/>
-   <addaction name="menuHelp"/>
   </widget>
   <action name="actionAddBook">
    <property name="text">

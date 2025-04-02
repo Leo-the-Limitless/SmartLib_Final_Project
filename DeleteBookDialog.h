@@ -22,7 +22,7 @@ private slots:
 private:
     Ui::DeleteBookDialog *ui;
     DatabaseManager dbManager;
-    int currentBookId;
+    QString currentBookId;
 };
 
 #endif // DELETEBOOKDIALOG_H
