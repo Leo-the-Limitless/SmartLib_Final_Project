@@ -39,8 +39,11 @@ struct qt_meta_tag_ZN10AdminPanelE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN10AdminPanelE = QtMocHelpers::stringData(
     "AdminPanel",
-    "onActionAddBookClicked",
+    "onActionLogOutClicked",
     "",
+    "onActionExitClicked",
+    "onActionRefreshClicked",
+    "onActionAddBookClicked",
     "onActionEditBookClicked",
     "onActionDeleteBookClicked",
     "onBookSelectionChanged",
@@ -57,7 +60,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10AdminPanelE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,14 +68,20 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10AdminPanelE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   50,    2, 0x08,    1 /* Private */,
-       3,    0,   51,    2, 0x08,    2 /* Private */,
-       4,    0,   52,    2, 0x08,    3 /* Private */,
-       5,    0,   53,    2, 0x08,    4 /* Private */,
-       6,    0,   54,    2, 0x08,    5 /* Private */,
-       7,    0,   55,    2, 0x08,    6 /* Private */,
+       1,    0,   68,    2, 0x08,    1 /* Private */,
+       3,    0,   69,    2, 0x08,    2 /* Private */,
+       4,    0,   70,    2, 0x08,    3 /* Private */,
+       5,    0,   71,    2, 0x08,    4 /* Private */,
+       6,    0,   72,    2, 0x08,    5 /* Private */,
+       7,    0,   73,    2, 0x08,    6 /* Private */,
+       8,    0,   74,    2, 0x08,    7 /* Private */,
+       9,    0,   75,    2, 0x08,    8 /* Private */,
+      10,    0,   76,    2, 0x08,    9 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -92,6 +101,12 @@ Q_CONSTINIT const QMetaObject AdminPanel::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN10AdminPanelE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<AdminPanel, std::true_type>,
+        // method 'onActionLogOutClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onActionExitClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onActionRefreshClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onActionAddBookClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onActionEditBookClicked'
@@ -113,12 +128,15 @@ void AdminPanel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<AdminPanel *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->onActionAddBookClicked(); break;
-        case 1: _t->onActionEditBookClicked(); break;
-        case 2: _t->onActionDeleteBookClicked(); break;
-        case 3: _t->onBookSelectionChanged(); break;
-        case 4: _t->searchBooks(); break;
-        case 5: _t->loadBooks(); break;
+        case 0: _t->onActionLogOutClicked(); break;
+        case 1: _t->onActionExitClicked(); break;
+        case 2: _t->onActionRefreshClicked(); break;
+        case 3: _t->onActionAddBookClicked(); break;
+        case 4: _t->onActionEditBookClicked(); break;
+        case 5: _t->onActionDeleteBookClicked(); break;
+        case 6: _t->onBookSelectionChanged(); break;
+        case 7: _t->searchBooks(); break;
+        case 8: _t->loadBooks(); break;
         default: ;
         }
     }
@@ -144,14 +162,14 @@ int AdminPanel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 9;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 9;
     }
     return _id;
 }

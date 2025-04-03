@@ -3,6 +3,7 @@
 #include "addbookdialog.h"
 #include "editbookdialog.h"
 #include "deletebookdialog.h"
+#include "LoginWindow.h"
 
 AdminPanel::AdminPanel(QWidget *parent) :
     QMainWindow(parent),
@@ -10,7 +11,10 @@ AdminPanel::AdminPanel(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Connect the renamed buttons to their respective slots
+    connect(ui->actionLog_out, &QAction::triggered, this, &AdminPanel::onActionLogOutClicked);
+    connect(ui->actionExit, &QAction::triggered, this, &AdminPanel::onActionExitClicked);
+    connect(ui->actionRefresh, &QAction::triggered, this, &AdminPanel::onActionRefreshClicked);
+
     connect(ui->addBookButton, &QPushButton::clicked, this, &AdminPanel::onActionAddBookClicked);
     connect(ui->editBookButton, &QPushButton::clicked, this, &AdminPanel::onActionEditBookClicked);
     connect(ui->deleteBookButton, &QPushButton::clicked, this, &AdminPanel::onActionDeleteBookClicked);
@@ -118,4 +122,25 @@ void AdminPanel::onBookSelectionChanged() {
         selectedBookId.clear();  // Clear selection
         ui->SelectedLabel->setText("None");
     }
+}
+
+void AdminPanel::onActionExitClicked(){
+    QApplication::quit();
+}
+
+void AdminPanel::onActionRefreshClicked(){
+    loadBooks();
+    qDebug()<<"Book load!";
+}
+
+void AdminPanel::onActionLogOutClicked() {
+    // Show the login window
+    LoginWindow *loginWindow = new LoginWindow();
+    loginWindow->show();
+
+    // Hide the main window so the user can log in again
+    this->hide();
+
+    // Optionally, you can connect the `destroyed` signal to close the main window when the login window is closed
+    connect(loginWindow, &LoginWindow::destroyed, this, &AdminPanel::close);
 }

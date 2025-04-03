@@ -125,7 +125,7 @@ QMessabeBox{
       </property>
       <column>
        <property name="text">
-        <string>IDss</string>
+        <string>IDs</string>
        </property>
        <property name="textAlignment">
         <set>AlignJustify|AlignBottom</set>
@@ -289,7 +289,7 @@ QComboBox QAbstractItemView {
        <item>
         <widget class="QLabel" name="labelUserId">
          <property name="text">
-          <string>Selected Book</string>
+          <string>Selected Book:</string>
          </property>
         </widget>
        </item>
@@ -385,17 +385,7 @@ QComboBox QAbstractItemView {
     <addaction name="actionExit"/>
     <addaction name="actionLog_out"/>
    </widget>
-   <widget class="QMenu" name="menuBooks">
-    <property name="title">
-     <string>Books</string>
-    </property>
-    <addaction name="actionAddBook"/>
-    <addaction name="actionEditBook"/>
-    <addaction name="actionDeleteBook"/>
-    <addaction name="separator"/>
-   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuBooks"/>
   </widget>
   <action name="actionAddBook">
    <property name="text">

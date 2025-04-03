@@ -398,7 +398,7 @@ public:
 
         ResultLabel->setText(QString());
         groupBoxActions->setTitle(QCoreApplication::translate("MainWindow", "Book Actions", nullptr));
-        labelUserId->setText(QCoreApplication::translate("MainWindow", "Selected Book", nullptr));
+        labelUserId->setText(QCoreApplication::translate("MainWindow", "Selected Book:", nullptr));
         SelectedLabel->setText(QString());
         borrowButton->setText(QCoreApplication::translate("MainWindow", "Borrow Book", nullptr));
         returnButton->setText(QCoreApplication::translate("MainWindow", "Return Book", nullptr));

@@ -65,7 +65,6 @@ public:
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menuFile;
-    QMenu *menuBooks;
 
     void setupUi(QMainWindow *AdminPanel)
     {
@@ -343,20 +342,13 @@ public:
         menubar->setGeometry(QRect(0, 0, 800, 24));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName("menuFile");
-        menuBooks = new QMenu(menubar);
-        menuBooks->setObjectName("menuBooks");
         AdminPanel->setMenuBar(menubar);
 
         menubar->addAction(menuFile->menuAction());
-        menubar->addAction(menuBooks->menuAction());
         menuFile->addAction(actionRefresh);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuFile->addAction(actionLog_out);
-        menuBooks->addAction(actionAddBook);
-        menuBooks->addAction(actionEditBook);
-        menuBooks->addAction(actionDeleteBook);
-        menuBooks->addSeparator();
 
         retranslateUi(AdminPanel);
 
@@ -398,13 +390,12 @@ public:
 
         ResultLabel->setText(QString());
         groupBoxActions->setTitle(QCoreApplication::translate("AdminPanel", "Book Actions", nullptr));
-        labelUserId->setText(QCoreApplication::translate("AdminPanel", "Selected Book", nullptr));
+        labelUserId->setText(QCoreApplication::translate("AdminPanel", "Selected Book:", nullptr));
         SelectedLabel->setText(QString());
         addBookButton->setText(QCoreApplication::translate("AdminPanel", "Add Book", nullptr));
         editBookButton->setText(QCoreApplication::translate("AdminPanel", "\360\237\226\212\357\270\217 Edit Book", nullptr));
         deleteBookButton->setText(QCoreApplication::translate("AdminPanel", "Delete Book", nullptr));
         menuFile->setTitle(QCoreApplication::translate("AdminPanel", "Menu", nullptr));
-        menuBooks->setTitle(QCoreApplication::translate("AdminPanel", "Books", nullptr));
     } // retranslateUi
 
 };

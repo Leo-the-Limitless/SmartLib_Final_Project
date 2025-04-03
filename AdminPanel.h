@@ -20,6 +20,9 @@ public:
     ~AdminPanel();
 
 private slots:
+    void onActionLogOutClicked();
+    void onActionExitClicked();
+    void onActionRefreshClicked();
     void onActionAddBookClicked();
     void onActionEditBookClicked();
     void onActionDeleteBookClicked();

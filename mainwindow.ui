@@ -289,7 +289,7 @@ QPushButton:disabled {
        <item>
         <widget class="QLabel" name="labelUserId">
          <property name="text">
-          <string>Selected Book</string>
+          <string>Selected Book:</string>
          </property>
         </widget>
        </item>
