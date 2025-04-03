@@ -21,7 +21,7 @@ private slots:
 private:
     Ui::AddBookDialog *ui;
     DatabaseManager dbManager;
-    bool isIdUnique(const QString &bookId);
+    bool isIdUnique(int bookId);
 };
 
 #endif // ADDBOOKDIALOG_H

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "AdminPanel.h"
 #include "LoginWindow.h"
 #include "RegisterWindow.h"
 #include "ui_LoginWindow.h"
@@ -28,25 +29,22 @@ void LoginWindow::onLoginButtonClicked() {
     QString username;
     bool isAdmin;
 
-    // Use the dbManager to check credentials and get user details
     if (dbManager.checkCredentials(email, password, userId, username, isAdmin)) {
-        // If login is successful, show a success message
         QMessageBox::information(this, "Login Successful", "Welcome, " + username);
 
-        // Emit the signal to notify that the user has logged in with their details
         emit userLoggedIn(userId, isAdmin);
 
-        // Now, pass user details to the MainWindow and show it
-        MainWindow *mainWindow = new MainWindow(userId, username, email, isAdmin);  // Pass username and email to MainWindow
-        mainWindow->show();
+        QWidget *nextWindow = nullptr;
+        if (isAdmin) {
+            nextWindow = new AdminPanel();
+        } else {
+            nextWindow = new MainWindow(userId, username, email, isAdmin);
+        }
 
-        // Optionally, hide the login window instead of closing it
+        nextWindow->show();
         this->hide();
-
-        // Optionally, close the login window completely when the main window is closed
-        connect(mainWindow, &MainWindow::destroyed, this, &LoginWindow::close);
+        connect(nextWindow, &QWidget::destroyed, this, &LoginWindow::close);
     } else {
-        // If login fails, show a warning message
         QMessageBox::warning(this, "Login Failed", "Invalid email or password.");
     }
 }

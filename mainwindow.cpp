@@ -25,9 +25,6 @@ MainWindow::MainWindow(int userId, const QString &username, const QString &email
     connect(ui->actionLog_out, &QAction::triggered, this, &MainWindow::onActionLogOutClicked);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::onActionExitClicked);
     connect(ui->actionRefresh, &QAction::triggered, this, &MainWindow::onActionRefreshClicked);
-    connect(ui->actionAddBook, &QAction::triggered, this, &MainWindow::onActionAddBookClicked);
-    connect(ui->actionEditBook, &QAction::triggered, this, &MainWindow::onActionEditBookClicked);
-    connect(ui->actionDeleteBook, &QAction::triggered, this, &MainWindow::onActionDeleteBookClicked);
     connect(ui->borrowButton, &QPushButton::clicked, this, &MainWindow::onBorrowButtonClicked);
     connect(ui->booksTableWidget, &QTableWidget::itemSelectionChanged, this, &MainWindow::onBookSelectionChanged);
     connect(ui->comboBoxSearchType, &QComboBox::currentTextChanged, this, &MainWindow::searchBooks);
@@ -216,25 +213,4 @@ void MainWindow::onActionExitClicked(){
 void MainWindow::onActionRefreshClicked(){
     loadBooks();
     qDebug()<<"Book load!";
-}
-
-void MainWindow::onActionAddBookClicked() {
-    AddBookDialog dialog(this);
-    if (dialog.exec() == QDialog::Accepted) {
-        loadBooks();  // Refresh book table after adding
-    }
-}
-
-void MainWindow::onActionEditBookClicked() {
-    EditBookDialog dialog(this);
-    if (dialog.exec() == QDialog::Accepted) {
-        loadBooks();  // Refresh book table after editing
-    }
-}
-
-void MainWindow::onActionDeleteBookClicked(){
-    DeleteBookDialog dialog(this);
-    if (dialog.exec()==QDialog::Accepted){
-        loadBooks();
-    }
 }

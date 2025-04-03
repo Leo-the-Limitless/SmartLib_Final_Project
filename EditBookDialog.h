@@ -12,12 +12,13 @@ class EditBookDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit EditBookDialog(QWidget *parent = nullptr);
+    // explicit EditBookDialog(QWidget *parent = nullptr);
+    explicit EditBookDialog(const QString &bookId, QWidget *parent = nullptr);
     ~EditBookDialog();
 
 private slots:
     void onSaveButtonClicked();
-    void onIdInputChanged(const QString &);
+    // void onIdInputChanged(const QString &);
 
 private:
     Ui::EditBookDialog *ui;

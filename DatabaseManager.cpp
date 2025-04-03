@@ -48,7 +48,7 @@ void DatabaseManager::initializeDatabase() {
 
     // Create Books Table
     if (!query.exec("CREATE TABLE IF NOT EXISTS books ("
-                    "book_id TEXT PRIMARY KEY, "
+                    "book_id INTEGER PRIMARY KEY, "
                     "title TEXT NOT NULL, "
                     "author TEXT NOT NULL, "
                     "genre TEXT, "
@@ -62,8 +62,10 @@ void DatabaseManager::initializeDatabase() {
     if (!query.exec("CREATE TABLE IF NOT EXISTS transactionrecord ("
                     "transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     "email TEXT NOT NULL, "
-                    "book_id INTEGER NOT NULL, "
+                    "book_id TEXT NOT NULL, "
                     "amount INTEGER NOT NULL DEFAULT 0, "
+                    "borrow_date TEXT NOT NULL DEFAULT (datetime('now')), "  // Stores when book was borrowed
+                    "due_date TEXT NOT NULL DEFAULT (datetime('now', '+3 days')), "  // Stores when book is due
                     "FOREIGN KEY (email) REFERENCES users(email), "
                     "FOREIGN KEY (book_id) REFERENCES books(book_id))")) {
         qDebug() << "Error creating 'transactionrecord' table: " << query.lastError().text();
@@ -123,7 +125,7 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
     }
     QString userEmail = query.value(0).toString();
 
-    // Check total books borrowed by user
+    // Check total books borrowed
     query.prepare("SELECT COUNT(*) FROM transactionrecord WHERE email = :email");
     query.bindValue(":email", userEmail);
     if (!query.exec() || !query.next()) {
@@ -139,24 +141,7 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
         return false;
     }
 
-    // Check copies of the same book borrowed by user
-    query.prepare("SELECT COUNT(*) FROM transactionrecord WHERE email = :email AND book_id = :book_id");
-    query.bindValue(":email", userEmail);
-    query.bindValue(":book_id", bookId);
-    if (!query.exec() || !query.next()) {
-        errorMessage = "Error fetching borrowed copies count: " + query.lastError().text();
-        QSqlDatabase::database().rollback();
-        return false;
-    }
-
-    int copiesOfSameBook = query.value(0).toInt();
-    if (copiesOfSameBook >= 2) {
-        errorMessage = "You have already borrowed 2 copies of this book.";
-        QSqlDatabase::database().rollback();
-        return false;
-    }
-
-    // Check book availability and stock
+    // Check book stock
     query.prepare("SELECT stock FROM books WHERE book_id = :book_id");
     query.bindValue(":book_id", bookId);
     if (!query.exec() || !query.next()) {
@@ -172,10 +157,12 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
         return false;
     }
 
-    // Insert a new transaction record
-    query.prepare("INSERT INTO transactionrecord (email, book_id, amount) VALUES (:email, :book_id, 1)");
+    // Insert transaction record
+    query.prepare("INSERT INTO transactionrecord (email, book_id, amount, borrow_date, due_date) "
+                  "VALUES (:email, :book_id, 1, datetime('now'), datetime('now', '+3 days'))");
     query.bindValue(":email", userEmail);
     query.bindValue(":book_id", bookId);
+
     if (!query.exec()) {
         errorMessage = "Error inserting transaction record: " + query.lastError().text();
         QSqlDatabase::database().rollback();
@@ -191,7 +178,7 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
         return false;
     }
 
-    // Update status only if stock is now zero
+    // Update status if stock is 0
     if (stock - 1 == 0) {
         query.prepare("UPDATE books SET status = 'Borrowed' WHERE book_id = :book_id");
         query.bindValue(":book_id", bookId);
@@ -202,7 +189,7 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
         }
     }
 
-    // Commit transaction if all queries succeed
+    // Commit transaction
     if (!QSqlDatabase::database().commit()) {
         errorMessage = "Transaction commit failed!";
         return false;
@@ -225,7 +212,7 @@ bool DatabaseManager::returnBook(int userId, int bookId) {
     }
     QString userEmail = query.value(0).toString();
 
-    // Find an active borrow transaction for this user and book
+    // Find borrow transaction
     query.prepare("SELECT transaction_id FROM transactionrecord WHERE email = :email AND book_id = :book_id AND amount = 1");
     query.bindValue(":email", userEmail);
     query.bindValue(":book_id", bookId);
@@ -237,7 +224,7 @@ bool DatabaseManager::returnBook(int userId, int bookId) {
 
     int transactionId = query.value(0).toInt();
 
-    // Delete the transaction record since it's completed
+    // Delete transaction
     query.prepare("DELETE FROM transactionrecord WHERE transaction_id = :transaction_id");
     query.bindValue(":transaction_id", transactionId);
     if (!query.exec()) {
@@ -245,7 +232,7 @@ bool DatabaseManager::returnBook(int userId, int bookId) {
         return false;
     }
 
-    // Increase book stock and update status to Available
+    // Update book stock
     query.prepare("UPDATE books SET stock = stock + 1, status = 'Available' WHERE book_id = :book_id");
     query.bindValue(":book_id", bookId);
     if (!query.exec()) {
@@ -271,9 +258,9 @@ void DatabaseManager::printBookDataADMIN(){
     qDebug() << "Books Table Data: ";
     while (query.next()){
         qDebug() << "Book ID: " << query.value("book_id").toInt()
-        << "Title: " << query.value("title")
-        << "Author: " << query.value("author")
-        << "Genre: " << query.value("genre");
+        << " Title: " << query.value("title").toString()
+        << " Author: " << query.value("author").toString()
+        << " Genre: " << query.value("genre").toString();
     }
 }
 

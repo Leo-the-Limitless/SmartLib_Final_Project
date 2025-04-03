@@ -15,10 +15,12 @@ AddBookDialog::~AddBookDialog() {
     delete ui;
 }
 
-bool AddBookDialog::isIdUnique(const QString &bookId) {
+// Ensure book ID is unique
+bool AddBookDialog::isIdUnique(int bookId) {
     QSqlQuery query;
     query.prepare("SELECT COUNT(*) FROM books WHERE book_id = :book_id");
     query.bindValue(":book_id", bookId);
+
     if (query.exec() && query.next()) {
         return query.value(0).toInt() == 0;
     }
@@ -26,21 +28,29 @@ bool AddBookDialog::isIdUnique(const QString &bookId) {
 }
 
 void AddBookDialog::onAddButtonClicked() {
-    QString id = ui->idInput->text().trimmed(); // Keep ID as QString
+    QString idStr = ui->idInput->text().trimmed();
     QString title = ui->titleInput->text().trimmed();
     QString author = ui->authorInput->text().trimmed();
     QString genre = ui->genreInput->text().trimmed();
     QString yearStr = ui->yearInput->text().trimmed();
     QString stockStr = ui->stockInput->text().trimmed();
 
+    // Validate book ID as a positive integer
+    bool idOk;
+    int bookId = idStr.toInt(&idOk);
+    if (!idOk || bookId <= 0) {
+        QMessageBox::warning(this, "Error", "Book ID must be a positive integer.");
+        return;
+    }
+
     // Check for empty fields
-    if (id.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty() ||
+    if (title.isEmpty() || author.isEmpty() || genre.isEmpty() ||
         yearStr.isEmpty() || stockStr.isEmpty()) {
         QMessageBox::warning(this, "Error", "Please fill in all fields.");
         return;
     }
 
-    // Validate that yearStr is a valid integer greater than 0
+    // Validate publication year
     bool yearOk;
     int year = yearStr.toInt(&yearOk);
     if (!yearOk || year <= 0) {
@@ -48,7 +58,7 @@ void AddBookDialog::onAddButtonClicked() {
         return;
     }
 
-    // Validate that stockStr is a valid integer greater than 0
+    // Validate stock quantity
     bool stockOk;
     int stock = stockStr.toInt(&stockOk);
     if (!stockOk || stock <= 0) {
@@ -57,16 +67,17 @@ void AddBookDialog::onAddButtonClicked() {
     }
 
     // Ensure book ID is unique
-    if (!isIdUnique(id)) {  // Pass the ID as a string
+    if (!isIdUnique(bookId)) {
         QMessageBox::warning(this, "Error", "Book ID already exists!");
         return;
     }
 
+    // Insert new book into the database
     QSqlQuery query;
     query.prepare("INSERT INTO books (book_id, title, author, genre, publication_year, status, stock) "
                   "VALUES (:id, :title, :author, :genre, :year, :status, :stock)");
 
-    query.bindValue(":id", id); // Store ID as a string
+    query.bindValue(":id", bookId);
     query.bindValue(":title", title);
     query.bindValue(":author", author);
     query.bindValue(":genre", genre);
@@ -81,5 +92,3 @@ void AddBookDialog::onAddButtonClicked() {
         QMessageBox::warning(this, "Error", "Failed to add book: " + query.lastError().text());
     }
 }
-
-

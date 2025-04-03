@@ -4,6 +4,8 @@
 
 #include <QMainWindow>
 #include "DatabaseManager.h"
+#include <QPushButton>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,17 +21,16 @@ public:
 
 private slots:
     void loadBooks();
+
     void searchBooks();
 
     void onActionLogOutClicked();
     void onActionExitClicked();
     void onActionRefreshClicked();
-    void onActionAddBookClicked();
-    void onActionEditBookClicked();
-    void onActionDeleteBookClicked();
     void onBorrowButtonClicked();
     void onBookSelectionChanged();
     void onReturnButtonClicked();
+
 
 private:
     Ui::MainWindow *ui;
@@ -39,6 +40,7 @@ private:
     QString currentUsername;
     QString currentEmail;
     bool currentIsAdmin;  // Store admin status
+
 };
 
 #endif // MAINWINDOW_H

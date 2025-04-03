@@ -11,6 +11,7 @@ CONFIG += console
 
 SOURCES += \
     AddBookDialog.cpp \
+    AdminPanel.cpp \
     Book.cpp \
     DatabaseManager.cpp \
     DeleteBookDialog.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     AddBookDialog.h \
+    AdminPanel.h \
     Book.h \
     DatabaseManager.h \
     DeleteBookDialog.h \
@@ -36,11 +38,13 @@ HEADERS += \
 
 FORMS += \
     AddBookDialog.ui \
+    AdminPanel.ui \
     DeleteBookDialog.ui \
     EditBookDialog.ui \
     LoginWindow.ui \
     RegisterWindow.ui \
     mainwindow.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

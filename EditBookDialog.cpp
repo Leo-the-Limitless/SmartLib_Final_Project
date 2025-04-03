@@ -5,25 +5,13 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-EditBookDialog::EditBookDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::EditBookDialog) {
+EditBookDialog::EditBookDialog(const QString &bookId, QWidget *parent)
+    : QDialog(parent), ui(new Ui::EditBookDialog), currentBookId(bookId) {
     ui->setupUi(this);
-    connect(ui->idInput, &QLineEdit::textChanged, this, &EditBookDialog::onIdInputChanged);
+
     connect(ui->SaveButton, &QPushButton::clicked, this, &EditBookDialog::onSaveButtonClicked);
-}
 
-EditBookDialog::~EditBookDialog() {
-    delete ui;
-}
-
-void EditBookDialog::onIdInputChanged(const QString &text) {
-    // If the ID is empty, don't do anything
-    if (text.isEmpty()) {
-        return;
-    }
-
-    currentBookId = text;  // Store as QString since book_id is TEXT now
-
+    // Fetch and display book details when opening
     QSqlQuery query;
     query.prepare("SELECT title, author, genre, publication_year, stock FROM books WHERE book_id = :book_id");
     query.bindValue(":book_id", currentBookId);
@@ -38,6 +26,33 @@ void EditBookDialog::onIdInputChanged(const QString &text) {
         QMessageBox::warning(this, "Error", "Book ID not found!");
     }
 }
+
+EditBookDialog::~EditBookDialog() {
+    delete ui;
+}
+
+// void EditBookDialog::onIdInputChanged(const QString &text) {
+//     // If the ID is empty, don't do anything
+//     if (text.isEmpty()) {
+//         return;
+//     }
+
+//     currentBookId = text;  // Store as QString since book_id is TEXT now
+
+//     QSqlQuery query;
+//     query.prepare("SELECT title, author, genre, publication_year, stock FROM books WHERE book_id = :book_id");
+//     query.bindValue(":book_id", currentBookId);
+
+//     if (query.exec() && query.next()) {
+//         ui->titleInput->setText(query.value(0).toString());
+//         ui->authorInput->setText(query.value(1).toString());
+//         ui->genreInput->setText(query.value(2).toString());
+//         ui->yearInput->setText(query.value(3).toString());
+//         ui->stockInput->setText(query.value(4).toString());
+//     } else {
+//         QMessageBox::warning(this, "Error", "Book ID not found!");
+//     }
+// }
 
 void EditBookDialog::onSaveButtonClicked() {
     QString title = ui->titleInput->text().trimmed();

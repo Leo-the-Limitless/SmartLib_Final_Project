@@ -127,41 +127,6 @@ QGroupBox::title {
    <property name="title">
     <string>EDITOR</string>
    </property>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel {
-    font-size: 14px;
-    color: #2c3e50;
-}</string>
-    </property>
-    <property name="text">
-     <string>ID</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="idInput">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>60</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
