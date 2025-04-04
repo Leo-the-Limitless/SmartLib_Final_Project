@@ -93,6 +93,32 @@ QLineEdit{
 QMessabeBox{
 	color:black;
 	background-color:white;
+}
+
+QTabWidget::pane { 
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    background-color: white;
+}
+
+QTabBar::tab {
+    background-color: #e0e0e0;
+    color: #2c3e50;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    min-width: 100px;
+    padding: 8px 12px;
+    margin-right: 2px;
+    font-weight: bold;
+}
+
+QTabBar::tab:selected {
+    background-color: #3498db;
+    color: white;
+}
+
+QTabBar::tab:hover:!selected {
+    background-color: #d0d0d0;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -113,49 +139,116 @@ QMessabeBox{
      </widget>
     </item>
     <item>
-     <widget class="QTableWidget" name="booksTableWidget">
-      <property name="alternatingRowColors">
-       <bool>true</bool>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::TabPosition::North</enum>
       </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+      <property name="tabShape">
+       <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+      <property name="currentIndex">
+       <number>2</number>
       </property>
-      <column>
-       <property name="text">
-        <string>IDs</string>
-       </property>
-       <property name="textAlignment">
-        <set>AlignJustify|AlignBottom</set>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Title</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Author</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Genre</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Publication Year</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Status</string>
-       </property>
-      </column>
+      <widget class="QWidget" name="tabBooks">
+       <attribute name="title">
+        <string>Inventory</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutBooks">
+        <item>
+         <widget class="QTableWidget" name="booksTableWidget">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>IDs</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Title</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Author</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Genre</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Publication Year</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabBorrowed">
+       <attribute name="title">
+        <string>Borrowed</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutBorrowed">
+        <item>
+         <widget class="QTableWidget" name="borrowedBooksTableWidget">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Email</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Book Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Amount</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Remaining Days</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabAnalysis">
+       <attribute name="title">
+        <string>Analysis</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutAnalysis">
+        <item>
+         <widget class="QWidget" name="chartContainer" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
@@ -168,6 +261,13 @@ QMessabeBox{
 QComboBox{
 	background-color: #3498db;
 	color:black;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #3498db; 
+    color: black;              
+    selection-background-color: #2980b9;
+    selection-color: white;      
 }</string>
       </property>
       <property name="title">

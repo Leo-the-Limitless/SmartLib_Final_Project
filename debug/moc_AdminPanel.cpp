@@ -48,7 +48,15 @@ static constexpr auto qt_meta_stringdata_ZN10AdminPanelE = QtMocHelpers::stringD
     "onActionDeleteBookClicked",
     "onBookSelectionChanged",
     "searchBooks",
-    "loadBooks"
+    "loadBooks",
+    "setupAnalysisChart",
+    "availableCount",
+    "borrowedCount",
+    "totalCount",
+    "overdueCount",
+    "loadBorrowedBooks",
+    "onTabChanged",
+    "index"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -60,7 +68,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10AdminPanelE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,15 +76,18 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10AdminPanelE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   68,    2, 0x08,    1 /* Private */,
-       3,    0,   69,    2, 0x08,    2 /* Private */,
-       4,    0,   70,    2, 0x08,    3 /* Private */,
-       5,    0,   71,    2, 0x08,    4 /* Private */,
-       6,    0,   72,    2, 0x08,    5 /* Private */,
-       7,    0,   73,    2, 0x08,    6 /* Private */,
-       8,    0,   74,    2, 0x08,    7 /* Private */,
-       9,    0,   75,    2, 0x08,    8 /* Private */,
-      10,    0,   76,    2, 0x08,    9 /* Private */,
+       1,    0,   86,    2, 0x08,    1 /* Private */,
+       3,    0,   87,    2, 0x08,    2 /* Private */,
+       4,    0,   88,    2, 0x08,    3 /* Private */,
+       5,    0,   89,    2, 0x08,    4 /* Private */,
+       6,    0,   90,    2, 0x08,    5 /* Private */,
+       7,    0,   91,    2, 0x08,    6 /* Private */,
+       8,    0,   92,    2, 0x08,    7 /* Private */,
+       9,    0,   93,    2, 0x08,    8 /* Private */,
+      10,    0,   94,    2, 0x08,    9 /* Private */,
+      11,    4,   95,    2, 0x08,   10 /* Private */,
+      16,    0,  104,    2, 0x08,   15 /* Private */,
+      17,    1,  105,    2, 0x08,   16 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -88,6 +99,9 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10AdminPanelE[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   12,   13,   14,   15,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   18,
 
        0        // eod
 };
@@ -118,7 +132,18 @@ Q_CONSTINIT const QMetaObject AdminPanel::staticMetaObject = { {
         // method 'searchBooks'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'loadBooks'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'setupAnalysisChart'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'loadBorrowedBooks'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onTabChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>
     >,
     nullptr
 } };
@@ -137,10 +162,12 @@ void AdminPanel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->onBookSelectionChanged(); break;
         case 7: _t->searchBooks(); break;
         case 8: _t->loadBooks(); break;
+        case 9: _t->setupAnalysisChart((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[4]))); break;
+        case 10: _t->loadBorrowedBooks(); break;
+        case 11: _t->onTabChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *AdminPanel::metaObject() const
@@ -162,14 +189,14 @@ int AdminPanel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 12;
     }
     return _id;
 }

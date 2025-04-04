@@ -25,6 +25,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -46,7 +47,16 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QLabel *labelTitle;
+    QTabWidget *tabWidget;
+    QWidget *tabBooks;
+    QVBoxLayout *verticalLayoutBooks;
     QTableWidget *booksTableWidget;
+    QWidget *tabBorrowed;
+    QVBoxLayout *verticalLayoutBorrowed;
+    QTableWidget *borrowedBooksTableWidget;
+    QWidget *tabAnalysis;
+    QVBoxLayout *verticalLayoutAnalysis;
+    QWidget *chartContainer;
     QGroupBox *groupBoxSearch;
     QHBoxLayout *horizontalLayout_2;
     QLabel *labelSearch;
@@ -151,6 +161,33 @@ public:
 "QMessabeBox{\n"
 "	color:black;\n"
 "	background-color:white;\n"
+"}\n"
+"\n"
+"QTabWidget::pane { \n"
+"    border: 1px solid #d0d0d0;\n"
+"    border-radius: 5px;\n"
+"    background-color: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab {\n"
+"    background-color: #e0e0e0;\n"
+"    color: #2c3e50;\n"
+"    border-top-left-radius: 5px;\n"
+"    border-top-right-radius: 5px;\n"
+"    min-width: 100px;\n"
+"    padding: 8px 12px;\n"
+"    margin-right: 2px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"    background-color: #3498db;\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab:ho"
+                        "ver:!selected {\n"
+"    background-color: #d0d0d0;\n"
 "}"));
         actionAddBook = new QAction(AdminPanel);
         actionAddBook->setObjectName("actionAddBook");
@@ -183,11 +220,18 @@ public:
 
         verticalLayout->addWidget(labelTitle);
 
-        booksTableWidget = new QTableWidget(centralwidget);
+        tabWidget = new QTabWidget(centralwidget);
+        tabWidget->setObjectName("tabWidget");
+        tabWidget->setTabPosition(QTabWidget::TabPosition::North);
+        tabWidget->setTabShape(QTabWidget::TabShape::Rounded);
+        tabBooks = new QWidget();
+        tabBooks->setObjectName("tabBooks");
+        verticalLayoutBooks = new QVBoxLayout(tabBooks);
+        verticalLayoutBooks->setObjectName("verticalLayoutBooks");
+        booksTableWidget = new QTableWidget(tabBooks);
         if (booksTableWidget->columnCount() < 6)
             booksTableWidget->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        __qtablewidgetitem->setTextAlignment(Qt::AlignJustify|Qt::AlignBottom);
         booksTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         booksTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
@@ -204,7 +248,44 @@ public:
         booksTableWidget->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
         booksTableWidget->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-        verticalLayout->addWidget(booksTableWidget);
+        verticalLayoutBooks->addWidget(booksTableWidget);
+
+        tabWidget->addTab(tabBooks, QString());
+        tabBorrowed = new QWidget();
+        tabBorrowed->setObjectName("tabBorrowed");
+        verticalLayoutBorrowed = new QVBoxLayout(tabBorrowed);
+        verticalLayoutBorrowed->setObjectName("verticalLayoutBorrowed");
+        borrowedBooksTableWidget = new QTableWidget(tabBorrowed);
+        if (borrowedBooksTableWidget->columnCount() < 4)
+            borrowedBooksTableWidget->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem7);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem9);
+        borrowedBooksTableWidget->setObjectName("borrowedBooksTableWidget");
+        borrowedBooksTableWidget->setAlternatingRowColors(true);
+        borrowedBooksTableWidget->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+        borrowedBooksTableWidget->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+
+        verticalLayoutBorrowed->addWidget(borrowedBooksTableWidget);
+
+        tabWidget->addTab(tabBorrowed, QString());
+        tabAnalysis = new QWidget();
+        tabAnalysis->setObjectName("tabAnalysis");
+        verticalLayoutAnalysis = new QVBoxLayout(tabAnalysis);
+        verticalLayoutAnalysis->setObjectName("verticalLayoutAnalysis");
+        chartContainer = new QWidget(tabAnalysis);
+        chartContainer->setObjectName("chartContainer");
+
+        verticalLayoutAnalysis->addWidget(chartContainer);
+
+        tabWidget->addTab(tabAnalysis, QString());
+
+        verticalLayout->addWidget(tabWidget);
 
         groupBoxSearch = new QGroupBox(centralwidget);
         groupBoxSearch->setObjectName("groupBoxSearch");
@@ -215,6 +296,13 @@ public:
 "QComboBox{\n"
 "	background-color: #3498db;\n"
 "	color:black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #3498db; \n"
+"    color: black;              \n"
+"    selection-background-color: #2980b9;\n"
+"    selection-color: white;      \n"
 "}"));
         horizontalLayout_2 = new QHBoxLayout(groupBoxSearch);
         horizontalLayout_2->setObjectName("horizontalLayout_2");
@@ -352,6 +440,9 @@ public:
 
         retranslateUi(AdminPanel);
 
+        tabWidget->setCurrentIndex(2);
+
+
         QMetaObject::connectSlotsByName(AdminPanel);
     } // setupUi
 
@@ -369,7 +460,7 @@ public:
         actionLog_out->setText(QCoreApplication::translate("AdminPanel", "Log out", nullptr));
         labelTitle->setText(QCoreApplication::translate("AdminPanel", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">Library Management System</span></p></body></html>", nullptr));
         QTableWidgetItem *___qtablewidgetitem = booksTableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("AdminPanel", "IDss", nullptr));
+        ___qtablewidgetitem->setText(QCoreApplication::translate("AdminPanel", "IDs", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = booksTableWidget->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("AdminPanel", "Title", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = booksTableWidget->horizontalHeaderItem(2);
@@ -380,6 +471,17 @@ public:
         ___qtablewidgetitem4->setText(QCoreApplication::translate("AdminPanel", "Publication Year", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = booksTableWidget->horizontalHeaderItem(5);
         ___qtablewidgetitem5->setText(QCoreApplication::translate("AdminPanel", "Status", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabBooks), QCoreApplication::translate("AdminPanel", "Inventory", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = borrowedBooksTableWidget->horizontalHeaderItem(0);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("AdminPanel", "Email", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = borrowedBooksTableWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("AdminPanel", "Book Name", nullptr));
+        QTableWidgetItem *___qtablewidgetitem8 = borrowedBooksTableWidget->horizontalHeaderItem(2);
+        ___qtablewidgetitem8->setText(QCoreApplication::translate("AdminPanel", "Amount", nullptr));
+        QTableWidgetItem *___qtablewidgetitem9 = borrowedBooksTableWidget->horizontalHeaderItem(3);
+        ___qtablewidgetitem9->setText(QCoreApplication::translate("AdminPanel", "Remaining Days", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabBorrowed), QCoreApplication::translate("AdminPanel", "Borrowed", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabAnalysis), QCoreApplication::translate("AdminPanel", "Analysis", nullptr));
         groupBoxSearch->setTitle(QCoreApplication::translate("AdminPanel", "Search Books", nullptr));
         labelSearch->setText(QCoreApplication::translate("AdminPanel", "Search:", nullptr));
         lineEditSearch->setPlaceholderText(QCoreApplication::translate("AdminPanel", "Enter title, author or keyword...", nullptr));

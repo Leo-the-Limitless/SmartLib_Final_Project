@@ -1,5 +1,6 @@
 #include "DatabaseManager.h"
 #include <QFile>
+#include <QDateTime>
 
 DatabaseManager::DatabaseManager() {
     if (!QSqlDatabase::contains("qt_sql_default_connection")) {
@@ -65,7 +66,7 @@ void DatabaseManager::initializeDatabase() {
                     "book_id TEXT NOT NULL, "
                     "amount INTEGER NOT NULL DEFAULT 0, "
                     "borrow_date TEXT NOT NULL DEFAULT (datetime('now')), "  // Stores when book was borrowed
-                    "due_date TEXT NOT NULL DEFAULT (datetime('now', '+3 days')), "  // Stores when book is due
+                    "due_date TEXT NOT NULL DEFAULT (datetime('now', '+1 day')), "  // Stores when book is due
                     "FOREIGN KEY (email) REFERENCES users(email), "
                     "FOREIGN KEY (book_id) REFERENCES books(book_id))")) {
         qDebug() << "Error creating 'transactionrecord' table: " << query.lastError().text();
@@ -157,11 +158,17 @@ bool DatabaseManager::borrowBook(int userId, int bookId, QString &errorMessage) 
         return false;
     }
 
+    // Get current local time using Qt's QDateTime
+    QDateTime now = QDateTime::currentDateTime(); // Local time
+    QDateTime due = now.addDays(2); // Add 1 day for the due date
+
     // Insert transaction record
     query.prepare("INSERT INTO transactionrecord (email, book_id, amount, borrow_date, due_date) "
-                  "VALUES (:email, :book_id, 1, datetime('now'), datetime('now', '+3 days'))");
+                  "VALUES (:email, :book_id, 1, :borrow_date, :due_date)");
     query.bindValue(":email", userEmail);
     query.bindValue(":book_id", bookId);
+    query.bindValue(":borrow_date", now.toString("yyyy-MM-dd HH:mm:ss"));
+    query.bindValue(":due_date", due.toString("yyyy-MM-dd HH:mm:ss"));
 
     if (!query.exec()) {
         errorMessage = "Error inserting transaction record: " + query.lastError().text();

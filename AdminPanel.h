@@ -29,6 +29,9 @@ private slots:
     void onBookSelectionChanged();
     void searchBooks();
     void loadBooks();
+    void setupAnalysisChart(int availableCount, int borrowedCount, int totalCount, int overdueCount);
+    void loadBorrowedBooks();
+    void onTabChanged(int index);
 
 private:
     Ui::AdminPanel *ui;  // ✅ This requires `ui_AdminPanel.h`

@@ -23,14 +23,15 @@ private slots:
     void loadBooks();
 
     void searchBooks();
-
+    void searchBorrowedBooks();
     void onActionLogOutClicked();
     void onActionExitClicked();
     void onActionRefreshClicked();
     void onBorrowButtonClicked();
     void onBookSelectionChanged();
     void onReturnButtonClicked();
-
+    void loadBorrowedBooks();
+    void onTabChanged(int index); // Method to handle tab changes
 
 private:
     Ui::MainWindow *ui;

@@ -25,6 +25,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -46,6 +47,9 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QLabel *labelTitle;
+    QTabWidget *tabWidget;
+    QWidget *tabAllBooks;
+    QVBoxLayout *verticalLayout_2;
     QTableWidget *booksTableWidget;
     QGroupBox *groupBoxSearch;
     QHBoxLayout *horizontalLayout_2;
@@ -62,6 +66,23 @@ public:
     QPushButton *returnButton;
     QPushButton *refreshButton;
     QSpacerItem *horizontalSpacer_2;
+    QWidget *tabMyBorrowed;
+    QVBoxLayout *verticalLayout_3;
+    QTableWidget *borrowedBooksTableWidget;
+    QGroupBox *groupBoxBorrowedSearch;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *labelBorrowedSearch;
+    QLineEdit *lineEditBorrowedSearch;
+    QComboBox *comboBoxBorrowedSearchType;
+    QLabel *BorrowedResultLabel;
+    QGroupBox *groupBoxBorrowedActions;
+    QHBoxLayout *horizontalLayout_4;
+    QSpacerItem *horizontalSpacer_3;
+    QLabel *labelSelectedBorrowed;
+    QLabel *SelectedBorrowedLabel;
+    QPushButton *returnBorrowedButton;
+    QPushButton *refreshBorrowedButton;
+    QSpacerItem *horizontalSpacer_4;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menuFile;
@@ -152,6 +173,33 @@ public:
 "QMessabeBox{\n"
 "	color:black;\n"
 "	background-color:white;\n"
+"}\n"
+"\n"
+"QTabWidget::pane { \n"
+"    border: 1px solid #d0d0d0;\n"
+"    border-radius: 5px;\n"
+"    background-color: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab {\n"
+"    background-color: #e0e0e0;\n"
+"    color: #2c3e50;\n"
+"    border-top-left-radius: 5px;\n"
+"    border-top-right-radius: 5px;\n"
+"    min-width: 100px;\n"
+"    padding: 8px 12px;\n"
+"    margin-right: 2px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"    background-color: #3498db;\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab:ho"
+                        "ver:!selected {\n"
+"    background-color: #d0d0d0;\n"
 "}"));
         actionAddBook = new QAction(MainWindow);
         actionAddBook->setObjectName("actionAddBook");
@@ -184,11 +232,16 @@ public:
 
         verticalLayout->addWidget(labelTitle);
 
-        booksTableWidget = new QTableWidget(centralwidget);
+        tabWidget = new QTabWidget(centralwidget);
+        tabWidget->setObjectName("tabWidget");
+        tabAllBooks = new QWidget();
+        tabAllBooks->setObjectName("tabAllBooks");
+        verticalLayout_2 = new QVBoxLayout(tabAllBooks);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        booksTableWidget = new QTableWidget(tabAllBooks);
         if (booksTableWidget->columnCount() < 6)
             booksTableWidget->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        __qtablewidgetitem->setTextAlignment(Qt::AlignJustify|Qt::AlignBottom);
         booksTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         booksTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
@@ -205,9 +258,9 @@ public:
         booksTableWidget->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
         booksTableWidget->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-        verticalLayout->addWidget(booksTableWidget);
+        verticalLayout_2->addWidget(booksTableWidget);
 
-        groupBoxSearch = new QGroupBox(centralwidget);
+        groupBoxSearch = new QGroupBox(tabAllBooks);
         groupBoxSearch->setObjectName("groupBoxSearch");
         groupBoxSearch->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
 "	color: black;\n"
@@ -259,9 +312,9 @@ public:
         horizontalLayout_2->addWidget(ResultLabel);
 
 
-        verticalLayout->addWidget(groupBoxSearch);
+        verticalLayout_2->addWidget(groupBoxSearch);
 
-        groupBoxActions = new QGroupBox(centralwidget);
+        groupBoxActions = new QGroupBox(tabAllBooks);
         groupBoxActions->setObjectName("groupBoxActions");
         groupBoxActions->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
 "	color: black;\n"
@@ -332,7 +385,151 @@ public:
         horizontalLayout->addItem(horizontalSpacer_2);
 
 
-        verticalLayout->addWidget(groupBoxActions);
+        verticalLayout_2->addWidget(groupBoxActions);
+
+        tabWidget->addTab(tabAllBooks, QString());
+        tabMyBorrowed = new QWidget();
+        tabMyBorrowed->setObjectName("tabMyBorrowed");
+        verticalLayout_3 = new QVBoxLayout(tabMyBorrowed);
+        verticalLayout_3->setObjectName("verticalLayout_3");
+        borrowedBooksTableWidget = new QTableWidget(tabMyBorrowed);
+        if (borrowedBooksTableWidget->columnCount() < 4)
+            borrowedBooksTableWidget->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem7);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        borrowedBooksTableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem9);
+        borrowedBooksTableWidget->setObjectName("borrowedBooksTableWidget");
+        borrowedBooksTableWidget->setAlternatingRowColors(true);
+        borrowedBooksTableWidget->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+        borrowedBooksTableWidget->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+
+        verticalLayout_3->addWidget(borrowedBooksTableWidget);
+
+        groupBoxBorrowedSearch = new QGroupBox(tabMyBorrowed);
+        groupBoxBorrowedSearch->setObjectName("groupBoxBorrowedSearch");
+        groupBoxBorrowedSearch->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	color: black;\n"
+"}\n"
+"\n"
+"QComboBox{\n"
+"	background-color: #3498db;\n"
+"	color:black;\n"
+"}"));
+        horizontalLayout_3 = new QHBoxLayout(groupBoxBorrowedSearch);
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        labelBorrowedSearch = new QLabel(groupBoxBorrowedSearch);
+        labelBorrowedSearch->setObjectName("labelBorrowedSearch");
+
+        horizontalLayout_3->addWidget(labelBorrowedSearch);
+
+        lineEditBorrowedSearch = new QLineEdit(groupBoxBorrowedSearch);
+        lineEditBorrowedSearch->setObjectName("lineEditBorrowedSearch");
+
+        horizontalLayout_3->addWidget(lineEditBorrowedSearch);
+
+        comboBoxBorrowedSearchType = new QComboBox(groupBoxBorrowedSearch);
+        comboBoxBorrowedSearchType->addItem(QString());
+        comboBoxBorrowedSearchType->addItem(QString());
+        comboBoxBorrowedSearchType->addItem(QString());
+        comboBoxBorrowedSearchType->addItem(QString());
+        comboBoxBorrowedSearchType->setObjectName("comboBoxBorrowedSearchType");
+        comboBoxBorrowedSearchType->setStyleSheet(QString::fromUtf8("QComboBox {\n"
+"    background-color: #3498db;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #3498db; \n"
+"    color: black;              \n"
+"    selection-background-color: #2980b9;\n"
+"    selection-color: white;      \n"
+"}\n"
+""));
+
+        horizontalLayout_3->addWidget(comboBoxBorrowedSearchType);
+
+        BorrowedResultLabel = new QLabel(groupBoxBorrowedSearch);
+        BorrowedResultLabel->setObjectName("BorrowedResultLabel");
+        BorrowedResultLabel->setStyleSheet(QString::fromUtf8("QLabel{\n"
+"	color:red;\n"
+"}"));
+
+        horizontalLayout_3->addWidget(BorrowedResultLabel);
+
+
+        verticalLayout_3->addWidget(groupBoxBorrowedSearch);
+
+        groupBoxBorrowedActions = new QGroupBox(tabMyBorrowed);
+        groupBoxBorrowedActions->setObjectName("groupBoxBorrowedActions");
+        groupBoxBorrowedActions->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	color: black;\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"    background-color: #3498db;\n"
+"    color: white;\n"
+"    border: none;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #2980b9;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #1c6ea4;\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: #bdc3c7;\n"
+"}"));
+        horizontalLayout_4 = new QHBoxLayout(groupBoxBorrowedActions);
+        horizontalLayout_4->setObjectName("horizontalLayout_4");
+        horizontalSpacer_3 = new QSpacerItem(40, 15, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_3);
+
+        labelSelectedBorrowed = new QLabel(groupBoxBorrowedActions);
+        labelSelectedBorrowed->setObjectName("labelSelectedBorrowed");
+
+        horizontalLayout_4->addWidget(labelSelectedBorrowed);
+
+        SelectedBorrowedLabel = new QLabel(groupBoxBorrowedActions);
+        SelectedBorrowedLabel->setObjectName("SelectedBorrowedLabel");
+
+        horizontalLayout_4->addWidget(SelectedBorrowedLabel);
+
+        returnBorrowedButton = new QPushButton(groupBoxBorrowedActions);
+        returnBorrowedButton->setObjectName("returnBorrowedButton");
+        returnBorrowedButton->setMinimumSize(QSize(140, 0));
+        returnBorrowedButton->setIcon(icon1);
+
+        horizontalLayout_4->addWidget(returnBorrowedButton);
+
+        refreshBorrowedButton = new QPushButton(groupBoxBorrowedActions);
+        refreshBorrowedButton->setObjectName("refreshBorrowedButton");
+        refreshBorrowedButton->setMinimumSize(QSize(140, 0));
+        refreshBorrowedButton->setIcon(icon2);
+
+        horizontalLayout_4->addWidget(refreshBorrowedButton);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 15, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_4);
+
+
+        verticalLayout_3->addWidget(groupBoxBorrowedActions);
+
+        tabWidget->addTab(tabMyBorrowed, QString());
+
+        verticalLayout->addWidget(tabWidget);
 
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
@@ -360,6 +557,9 @@ public:
 
         retranslateUi(MainWindow);
 
+        tabWidget->setCurrentIndex(1);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
@@ -377,7 +577,7 @@ public:
         actionLog_out->setText(QCoreApplication::translate("MainWindow", "Log out", nullptr));
         labelTitle->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">Library Management System</span></p></body></html>", nullptr));
         QTableWidgetItem *___qtablewidgetitem = booksTableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "IDss", nullptr));
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "ID", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = booksTableWidget->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Title", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = booksTableWidget->horizontalHeaderItem(2);
@@ -403,6 +603,30 @@ public:
         borrowButton->setText(QCoreApplication::translate("MainWindow", "Borrow Book", nullptr));
         returnButton->setText(QCoreApplication::translate("MainWindow", "Return Book", nullptr));
         refreshButton->setText(QCoreApplication::translate("MainWindow", "Refresh List", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabAllBooks), QCoreApplication::translate("MainWindow", "All Books", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = borrowedBooksTableWidget->horizontalHeaderItem(0);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "ID", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = borrowedBooksTableWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Title", nullptr));
+        QTableWidgetItem *___qtablewidgetitem8 = borrowedBooksTableWidget->horizontalHeaderItem(2);
+        ___qtablewidgetitem8->setText(QCoreApplication::translate("MainWindow", "Author", nullptr));
+        QTableWidgetItem *___qtablewidgetitem9 = borrowedBooksTableWidget->horizontalHeaderItem(3);
+        ___qtablewidgetitem9->setText(QCoreApplication::translate("MainWindow", "Remaining Days", nullptr));
+        groupBoxBorrowedSearch->setTitle(QCoreApplication::translate("MainWindow", "Search Borrowed Books", nullptr));
+        labelBorrowedSearch->setText(QCoreApplication::translate("MainWindow", "Search:", nullptr));
+        lineEditBorrowedSearch->setPlaceholderText(QCoreApplication::translate("MainWindow", "Enter title or author...", nullptr));
+        comboBoxBorrowedSearchType->setItemText(0, QCoreApplication::translate("MainWindow", "Title", nullptr));
+        comboBoxBorrowedSearchType->setItemText(1, QCoreApplication::translate("MainWindow", "Author", nullptr));
+        comboBoxBorrowedSearchType->setItemText(2, QCoreApplication::translate("MainWindow", "Genre", nullptr));
+        comboBoxBorrowedSearchType->setItemText(3, QCoreApplication::translate("MainWindow", "All Fields", nullptr));
+
+        BorrowedResultLabel->setText(QString());
+        groupBoxBorrowedActions->setTitle(QCoreApplication::translate("MainWindow", "Actions", nullptr));
+        labelSelectedBorrowed->setText(QString());
+        SelectedBorrowedLabel->setText(QString());
+        returnBorrowedButton->setText(QCoreApplication::translate("MainWindow", "Return Book", nullptr));
+        refreshBorrowedButton->setText(QCoreApplication::translate("MainWindow", "Refresh List", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tabMyBorrowed), QCoreApplication::translate("MainWindow", "My Borrowed Books", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "Menu", nullptr));
         menuBooks->setTitle(QCoreApplication::translate("MainWindow", "Books", nullptr));
     } // retranslateUi
