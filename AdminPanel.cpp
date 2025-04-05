@@ -30,6 +30,8 @@ AdminPanel::AdminPanel(QWidget *parent) :
     connect(ui->comboBoxSearchType, &QComboBox::currentTextChanged, this, &AdminPanel::searchBooks);
     connect(ui->lineEditSearch, &QLineEdit::textChanged, this, &AdminPanel::searchBooks);
     loadBooks(); // Load books on startup
+    loadBorrowedBooks();
+    onTabChanged(2);
 }
 
 AdminPanel::~AdminPanel()

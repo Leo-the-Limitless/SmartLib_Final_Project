@@ -17,6 +17,7 @@ MainWindow::MainWindow(int userId, const QString &username, const QString &email
 
     dbManager.openDatabase();
     loadBooks();
+    loadBorrowedBooks();
 
     // Hide menuBooks if the user is not an admin
     if (!currentIsAdmin) {

@@ -2368,7 +2368,11 @@ release/DatabaseManager.o: DatabaseManager.cpp DatabaseManager.h \
 		C:/Qt/6.8.1/mingw_64/include/QtCore/QFile \
 		C:/Qt/6.8.1/mingw_64/include/QtCore/qfile.h \
 		C:/Qt/6.8.1/mingw_64/include/QtCore/qfiledevice.h \
-		C:/Qt/6.8.1/mingw_64/include/QtCore/qiodevice.h
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qiodevice.h \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/QDateTime \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qlocale.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\DatabaseManager.o DatabaseManager.cpp
 
 release/DeleteBookDialog.o: DeleteBookDialog.cpp DeleteBookDialog.h \
@@ -3842,7 +3846,10 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/6.8.1/mingw_64/include/QtGui/qtextdocument.h \
 		C:/Qt/6.8.1/mingw_64/include/QtGui/qtextformat.h \
 		C:/Qt/6.8.1/mingw_64/include/QtGui/qpen.h \
-		C:/Qt/6.8.1/mingw_64/include/QtGui/qtextoption.h
+		C:/Qt/6.8.1/mingw_64/include/QtGui/qtextoption.h \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.8.1/mingw_64/include/QtCore/qcalendar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o mainwindow.cpp
 
 release/moc_AddBookDialog.o: release/moc_AddBookDialog.cpp 
