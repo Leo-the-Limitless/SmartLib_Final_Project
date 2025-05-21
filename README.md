@@ -21,6 +21,9 @@ It streamlines the entire library workflow with a smooth user and admin interfac
 - 🗄️ SQLite (Database)
 - 📦 Clean file structure with separation of user/admin logic
 
+## 📼Demo Video
+https://drive.google.com/file/d/1IlVwf1Teyd415m6kK7WeKkXTllMkWSBr/view?usp=sharing
+
 ## 🖼️ Preview
 
 ![Preview1](Preview1.png)
